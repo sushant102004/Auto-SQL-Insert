@@ -41,7 +41,37 @@ const insertData = (function() {
         }
     }
 
+    function insertProjects() {
+        for (let i = 0; i < dLocations.length; i++) {
+            let obj = projects[i]
+            connection.query(`INSERT INTO project (Pname, Pnumber, Plocation, Dnum) VALUES ("${obj.name}", ${obj.pNumber}, "${obj.pLocation}", ${obj.dNum});`,
+                function(err, result, fields) {
+                    if(err) {
+                        console.error(err)
+                        return;
+                    } else {
+                        console.log('Saved')
+                    }
+                })
+        }
+    }
+
     return {
-        insertDLocations : insertDLocations
+        insertDLocations : insertDLocations,
+        insertProjects : insertProjects
     }
 })()
+
+
+
+const projects = [
+    { name : 'ProductX', pNumber : 1, pLocation : 'Bellaire', dNum : 5},
+    { name : 'ProductY', pNumber : 2, pLocation : 'Sugarland', dNum : 5},
+    { name : 'ProductZ', pNumber : 3, pLocation : 'Huston', dNum : 5},
+    { name : 'Computerization', pNumber : 10, pLocation : 'Stafford', dNum : 5},
+    { name : 'Reorganization', pNumber : 20, pLocation : 'Huston', dNum : 5},
+    { name : 'Newbenefits', pNumber : 30, pLocation : 'Stafford', dNum : 5},
+]
+
+const insert = insertData
+insert.insertProjects()
